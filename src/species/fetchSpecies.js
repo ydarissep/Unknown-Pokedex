@@ -137,32 +137,23 @@ async function cleanSpecies(species){
         }
         
 
-        if(/_GIGA"/i.test(JSON.stringify(species[name]["evolutionLine"]))){
-            if(species[name]["evolution"].length === 1){
-                species[name]["evolution"] = []
-            }
+
+        if(/EVO_GIGANTAMAX/i.test(species[name]["evolution"].toString())){
             for (let i = 0; i < species[name]["evolution"].length; i++){
                 if(species[name]["evolution"][i][0] === "EVO_GIGANTAMAX"){
-                    species[name]["evolution"].splice(i, i)
-                }
-            }
-            for (let i = 0; i < species[name]["evolutionLine"].length; i++){
-                if(/_GIGA$/i.test(species[name]["evolutionLine"][i])){
-                    species[name]["evolutionLine"].splice(i, i)
-                }
-            }
-            for (let i = 0; i < species[name]["forms"].length; i++){
-                if(/_GIGA$/i.test(species[name]["forms"][i])){
-                    species[name]["forms"].splice(i, i)
+                    species[name]["evolution"].splice(i, 1)
                 }
             }
         }
-        else if(species[name]["baseSpeed"] <= 0){
+        if(species[name]["baseSpeed"] <= 0 || /_GIGA$/i.test(name)){
             for (let i = 0; i < species[name]["forms"].length; i++){
                 const targetSpecies = species[name]["forms"][i]
                 for (let j = 0; j < species[targetSpecies]["forms"].length; j++){
                     if(species[targetSpecies]["forms"][j] === name){
                         species[targetSpecies]["forms"].splice(j, 1)
+                    }
+                    if(species[targetSpecies]["forms"].length <= 1){
+                        species[targetSpecies]["forms"] = []
                     }
                 }
             }
@@ -229,7 +220,6 @@ async function buildSpeciesObj(){
     //species = await getForms(species) // should be called in that order until here    // done in getLevelUpLearnsets for RR
     species = await getBaseStats(species)
     //species = await getReplaceAbilities(species) // missing
-    species = await getChanges(species, "https://raw.githubusercontent.com/Skeli789/Dynamic-Pokemon-Expansion/master/src/Base_Stats.c")
     species = await getLevelUpLearnsets(species)
     species = await getTMHMLearnsets(species)
     species = await getEggMovesLearnsets(species)
@@ -245,6 +235,10 @@ async function buildSpeciesObj(){
 
 
     species = await cleanSpecies(species)
+
+
+
+    species = await getChanges(species, "https://raw.githubusercontent.com/Skeli789/Dynamic-Pokemon-Expansion/master/src/Base_Stats.c")
 
 
 

@@ -59,10 +59,12 @@ function displayLocations(){
                     window.scrollTo(0, 0)
                 })
 
+                /*
                 counter++
                 if(counter >= 75){
                     row.classList.add("hideTemp")
                 }
+                */
 
             }
             let blankRow = rowZoneHeader.cloneNode(true)
@@ -70,10 +72,12 @@ function displayLocations(){
             blankRow.getElementsByClassName("zone")[0].innerText += "\nbreakline"
             tBody.append(blankRow)
 
+            /*
             if(counter >= 75){
                 rowZoneHeader.classList.add("hideTemp")
                 blankRow.classList.add("hideTemp")
             }
+            */
 
         }
     }

@@ -49,8 +49,9 @@ async function buildAbilitiesObj(){
     abilities["ABILITY_WANDERING_SPIRIT"]["description"] = "Trades Abilities on contact."
     abilities["ABILITY_PERISH_BODY"]["description"] = "Gives a perish count on contact."
     abilities["ABILITY_STEELY_SPIRIT"]["description"] = "Boosts ally Steel moves."
-    
-    //abilities["ABILITY_GULPMISSLE"]["description"] = "Spits prey if damaged after a swim." // fixed
+    abilities["ABILITY_GULPMISSLE"]["description"] = "Spits prey if damaged after a swim."
+
+
     delete abilities["ABILITY_NONE"]
     delete abilities["ABILITY_NAME_LENGTH"]
     delete abilities["ABILITY_NAMELENGTH"]
