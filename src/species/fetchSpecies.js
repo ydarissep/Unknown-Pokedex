@@ -96,6 +96,8 @@ async function getChanges(species, url){
 async function cleanSpecies(species){
     footerP("Cleaning up...")
     await Object.keys(species).forEach(name => {
+
+
         if(/UNOWN/i.test(name)){
             species[name]["baseHP"] = 50
             species[name]["baseAttack"] = 50
@@ -133,7 +135,28 @@ async function cleanSpecies(species){
             species[name]["baseSpeed"] = Math.round(species[name]["baseSpeed"] * multiplier)
             species[name]["BST"] = calculateBST(name, species)
         }
-        if(species[name]["baseSpeed"] <= 0){
+
+
+
+
+        if(/EVO_GIGANTAMAX/i.test(species[name]["evolution"].toString())){
+            for (let i = 0; i < species[name]["evolution"].length; i++){
+                if(species[name]["evolution"][i][0] === "EVO_GIGANTAMAX"){
+                    species[name]["evolution"].splice(i, i)
+                }
+            }
+            for (let i = 0; i < species[name]["evolutionLine"].length; i++){
+                if(/_GIGA$/i.test(species[name]["evolutionLine"][i])){
+                    species[name]["evolutionLine"].splice(i, i)
+                }
+            }
+            for (let i = 0; i < species[name]["forms"].length; i++){
+                if(/_GIGA$/i.test(species[name]["forms"][i])){
+                    species[name]["forms"].splice(i, i)
+                }
+            }
+        }
+        else if(species[name]["baseSpeed"] <= 0){
             for (let i = 0; i < species[name]["forms"].length; i++){
                 const targetSpecies = species[name]["forms"][i]
                 for (let j = 0; j < species[targetSpecies]["forms"].length; j++){
@@ -151,7 +174,7 @@ async function cleanSpecies(species){
                 }
             }
         }
-        if(name.match(/_GIGA$/i) !== null && species[name]["evolution"].toString().includes("EVO_MEGA")){
+        else if(name.match(/_GIGA$/i) !== null && species[name]["evolution"].toString().includes("EVO_MEGA")){
             const replaceName = name.replace(/_GIGA$/i, "_MEGA")
             species[name]["name"] = replaceName
             species[name]["changes"] = []
@@ -176,12 +199,14 @@ async function cleanSpecies(species){
             species[replaceName] = species[name]
             delete species[name]
         }
-        if(name.match(/_MEGA$|_MEGA_Y$|_MEGA_X$|_GIGA$/i) !== null){
+        else if(name.match(/_MEGA$|_MEGA_Y$|_MEGA_X$|_GIGA$/i) !== null){
             species[name]["evolution"] = []
         }
     })
+
+
     await Object.keys(species).forEach(name => {
-        if(species[name]["baseSpeed"] <= 0){
+        if(species[name]["baseSpeed"] <= 0 || /_GIGA$/i.test(name)){
             delete species[name]
         }
     })

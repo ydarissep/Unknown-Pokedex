@@ -241,10 +241,12 @@ async function regexTMHMLearnsets(textTMHMLearnsets, species, start, end){
                     move = "Will-o-Wisp"
                 else if(move === "U-turn")
                     move = "U-Turn"
+                else if(move === "Poweruppunch")
+                    move = "Power-Up Punch"
+                else if(move === "Dazzlinggleam")
+                    move = "Dazzling Gleam"
                 else if(move === "Drainingkiss")
                     move = "Draining Kiss"
-                else if(move === "Acrobatics")
-                    move = "Smart Strike"
 
                 const rawTMHM = fetch(`https://raw.githubusercontent.com/${repo}/main/data/species/tm_compatibility/${count} - ${move}.txt`)
                 .then(promises => {
@@ -296,12 +298,50 @@ async function regexTutorLearnsets(textTutorLearnsets, species, start, end){
                 let move = moves[matchMove[0]]["ingameName"]
                 count++
 
-                /*
-                if(move === "Buring Jealousy")
+                if(move === "Burningjealousy")
                     move = "Burning Jealousy"
                 else if(move === "Soft-Boiled")
                     move = "Softboiled"
-                */
+                else if(move === "Stompingtantrum")
+                    move = "Stomping Tantrum"
+                else if(move === "Mistyterrain")
+                    move = "Misty Terrain"
+                else if(move === "Grassyterrain")
+                    move = "Grassy Terrain"
+                else if(move === "Psychicterrain")
+                    move = "Psychic Terrain"
+                else if(move === "Electricterrain")
+                    move = "Electric Terrain"
+                else if(move === "Breakingswipe")
+                    move = "Breaking Swipe"
+                else if(move === "Highhorsepower")
+                    move = "High Horsepower"
+                else if(move === "ThunderPunch")
+                    move = "Thunder Punch"
+                else if(move === "Darkestlariat")
+                    move = "Darkest Lariat"
+                else if(move === "PhantomForce")
+                    move = "Phantom Force"
+                else if(move === "Mysticalfire")
+                    move = "Mystical Fire"
+                else if(move === "Psychicfangs")
+                    move = "Psychic Fangs"
+                else if(move === "Expandingforce")
+                    move = "Expanding Force"
+                else if(move === "TerrainPulse")
+                    move = "Terrain Pulse"
+                else if(move === "Risingvoltage")
+                    move = "Rising Voltage"
+                else if(move === "Mistyexplosion")
+                    move = "Misty Explosion"
+                else if(move === "Corrosivegas")
+                    move = "Corrosive Gas"
+                else if(move === "SkitterSmack")
+                    move = "Skitter Smack"
+                else if(move === "Scorchingsands")
+                    move = "Scorching Sands"
+                else if(move === "DualWingbeat")
+                    move = "Dual Wingbeat"
 
                 const rawTutor = fetch(`https://raw.githubusercontent.com/${repo}/main/data/species/tutor_compatibility/${count} - ${move}.txt`)
                 .then(promises => {

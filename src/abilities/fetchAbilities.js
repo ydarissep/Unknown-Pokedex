@@ -43,7 +43,7 @@ async function buildAbilitiesObj(){
     abilities = await getVanillaAbilitiesDescription(abilities)
     abilities = await getAbilitiesIngameName(abilities)
     abilities = await getAbilitiesDescription(abilities)
-    abilities = await getNewAbilities(abilities)
+    //abilities = await getNewAbilities(abilities) // missing
 
     abilities["ABILITY_NEUTRALIZINGGAS"]["description"] = "All Abilities are nullified."
     abilities["ABILITY_WANDERING_SPIRIT"]["description"] = "Trades Abilities on contact."
