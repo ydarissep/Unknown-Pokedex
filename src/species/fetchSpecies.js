@@ -135,11 +135,12 @@ async function cleanSpecies(species){
             species[name]["baseSpeed"] = Math.round(species[name]["baseSpeed"] * multiplier)
             species[name]["BST"] = calculateBST(name, species)
         }
+        
 
-
-
-
-        if(/EVO_GIGANTAMAX/i.test(species[name]["evolution"].toString())){
+        if(/_GIGA"/i.test(JSON.stringify(species[name]["evolutionLine"]))){
+            if(species[name]["evolution"].length === 1){
+                species[name]["evolution"] = []
+            }
             for (let i = 0; i < species[name]["evolution"].length; i++){
                 if(species[name]["evolution"][i][0] === "EVO_GIGANTAMAX"){
                     species[name]["evolution"].splice(i, i)
