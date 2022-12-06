@@ -39,49 +39,52 @@ async function regexBaseStats(textBaseStats, species){
 
     await lines.forEach(line => {
 
-        if(/#else/i.test(line))
-                change = true
-        if(/#endif/i.test(line))
-                change = false
+        if(!/^\/\/./.test(line.trim())){
+
+            if(/#else/i.test(line))
+                    change = true
+            if(/#endif/i.test(line))
+                    change = false
 
 
-        const matchSpecies = line.match(/SPECIES_\w+/i)
-        if(matchSpecies !== null){
-            if(matchSpecies[0] in species){
-                name = matchSpecies[0]
-                change = false
+            const matchSpecies = line.match(/SPECIES_\w+/i)
+            if(matchSpecies !== null){
+                if(matchSpecies[0] in species){
+                    name = matchSpecies[0]
+                    change = false
+                }
             }
-        }
 
 
-        if(name !== "SPECIES_NONE" && name !== "SPECIES_EGG"){
-            const matchRegex = line.match(regex)
-            if(matchRegex !== null){
-                const match = matchRegex[0]
-
-
-
-                if(match === "baseHP" || match === "baseAttack" || match === "baseDefense" || match === "baseSpeed" || match === "baseSpAttack" || match === "baseSpDefense"){
-                    const matchInt = line.match(/\d+/)
-                    if(matchInt !== null)
-                        value = parseInt(matchInt[0])
-                }
-                else if(match === "type1" || match === "type2" || match === "item1" || match === "item2" || match === "eggGroup1" || match === "eggGroup2" || match === "ability1" || match === "ability2" || match === "hiddenAbility"){
-                    value = line.match(/\w+_\w+/i)
-                    if(value !== null)
-                        value = value[0]
-                }
+            if(name !== "SPECIES_NONE" && name !== "SPECIES_EGG"){
+                const matchRegex = line.match(regex)
+                if(matchRegex !== null){
+                    const match = matchRegex[0]
 
 
 
-                if(change === true)
-                    species[name]["changes"].push([match, value])
-                else if(change === false){
-                    if(match === "ability1" || match === "ability2" || match === "hiddenAbility"){
-                        species[name]["abilities"].push(value)
+                    if(match === "baseHP" || match === "baseAttack" || match === "baseDefense" || match === "baseSpeed" || match === "baseSpAttack" || match === "baseSpDefense"){
+                        const matchInt = line.match(/\d+/)
+                        if(matchInt !== null)
+                            value = parseInt(matchInt[0])
                     }
-                    else{
-                        species[name][match] = value
+                    else if(match === "type1" || match === "type2" || match === "item1" || match === "item2" || match === "eggGroup1" || match === "eggGroup2" || match === "ability1" || match === "ability2" || match === "hiddenAbility"){
+                        value = line.match(/\w+_\w+/i)
+                        if(value !== null)
+                            value = value[0]
+                    }
+
+
+
+                    if(change === true)
+                        species[name]["changes"].push([match, value])
+                    else if(change === false){
+                        if(match === "ability1" || match === "ability2" || match === "hiddenAbility"){
+                            species[name]["abilities"].push(value)
+                        }
+                        else{
+                            species[name][match] = value
+                        }
                     }
                 }
             }
