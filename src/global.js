@@ -357,7 +357,7 @@ patchnoteModeCheckbox.addEventListener("change", e => {
         document.querySelectorAll(".changelogBuff").forEach(el => el.classList.remove("buff", "bold"))
         document.querySelectorAll(".changelogNerf").forEach(el => el.classList.remove("nerf", "bold"))
     }
-    //lazyLoading(reset = true)
+    lazyLoading(reset = true)
 })
 
 onlyShowChangedPokemonCheckbox.addEventListener("change", e => {
@@ -375,7 +375,7 @@ onlyShowChangedPokemonCheckbox.addEventListener("change", e => {
             row.classList.remove("hideChanged")
         }
     })
-    //lazyLoading(reset = true)
+    lazyLoading(reset = true)
 })
 
 
@@ -528,7 +528,7 @@ const options = {
 
 function footerIsTouching(entries){
     if(entries[0].isIntersecting){
-        //lazyLoading(false)
+        lazyLoading(false)
         openCredits.classList.remove("hide")
         update.classList.remove("hide")
     }
@@ -571,11 +571,9 @@ function tableIsTouching(entries){
 }
 
 function openCreditsIsTouching(entries){
-    /*
     if(entries[0].isIntersecting){
         lazyLoading(false)
     }
-    */
 }
 
 const observerFooter = new IntersectionObserver(footerIsTouching, options)
