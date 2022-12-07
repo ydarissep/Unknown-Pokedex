@@ -127,12 +127,12 @@ async function cleanSpecies(species){
             else if(/RAICHU/i.test(name))
                 multiplier = 1.1
 
-            species[name]["baseHP"] = Math.round(species[name]["baseHP"] * multiplier)
-            species[name]["baseAttack"] = Math.round(species[name]["baseAttack"] * multiplier)
-            species[name]["baseDefense"] = Math.round(species[name]["baseDefense"] * multiplier)
-            species[name]["baseSpAttack"] = Math.round(species[name]["baseSpAttack"] * multiplier)
-            species[name]["baseSpDefense"] = Math.round(species[name]["baseSpDefense"] * multiplier)
-            species[name]["baseSpeed"] = Math.round(species[name]["baseSpeed"] * multiplier)
+            species[name]["baseHP"] = Math.floor(species[name]["baseHP"] * multiplier)
+            species[name]["baseAttack"] = Math.floor(species[name]["baseAttack"] * multiplier)
+            species[name]["baseDefense"] = Math.floor(species[name]["baseDefense"] * multiplier)
+            species[name]["baseSpAttack"] = Math.floor(species[name]["baseSpAttack"] * multiplier)
+            species[name]["baseSpDefense"] = Math.floor(species[name]["baseSpDefense"] * multiplier)
+            species[name]["baseSpeed"] = Math.floor(species[name]["baseSpeed"] * multiplier)
             species[name]["BST"] = calculateBST(name, species)
         }
         
