@@ -35,11 +35,18 @@ async function regexBaseStats(textBaseStats, species){
     const lines = textBaseStats.split("\n")
 
     const regex = /baseHP|baseAttack|baseDefense|baseSpeed|baseSpAttack|baseSpDefense|type1|type2|item1|item2|eggGroup1|eggGroup2|ability1|ability2|hiddenAbility/i
-    let change = false, value, name
+    let change = false, value, name, stop = false
 
     await lines.forEach(line => {
 
-        if(!/^\/\/./.test(line.trim())){
+        if(/^\/\*/i.test(line.trim())){
+            stop = true
+        }
+        if(/^\*\//i.test(line.trim())){
+            stop = false
+        }
+
+        if(!/^\/\//.test(line.trim()) && stop !== true){
 
             if(/#else/i.test(line))
                     change = true
@@ -185,19 +192,23 @@ async function regexLevelUpLearnsets(textLevelUpLearnsets, conversionTable, spec
     let speciesArray = []
 
     await lines.forEach(line => {
-        const matchConversion = line.match(/s\w+LevelUpLearnset/i)
-        if(matchConversion !== null){
-            const index = matchConversion[0]
-            speciesArray = conversionTable[index]
-        }
+
+        if(!/^\/\//.test(line.trim())){
+
+            const matchConversion = line.match(/s\w+LevelUpLearnset/i)
+            if(matchConversion !== null){
+                const index = matchConversion[0]
+                speciesArray = conversionTable[index]
+            }
 
 
-        const matchLevelMove = line.match(/(\d+) *, *(MOVE_\w+)/i)
-        if(matchLevelMove !== null){
-            const level = parseInt(matchLevelMove[1])
-            const move = matchLevelMove[2]
-            for(let i = 0; i < speciesArray.length; i++)
-                species[speciesArray[i]]["levelUpLearnsets"].push([move, level])
+            const matchLevelMove = line.match(/(\d+) *, *(MOVE_\w+)/i)
+            if(matchLevelMove !== null){
+                const level = parseInt(matchLevelMove[1])
+                const move = matchLevelMove[2]
+                for(let i = 0; i < speciesArray.length; i++)
+                    species[speciesArray[i]]["levelUpLearnsets"].push([move, level])
+            }
         }
     })
     for (const name of Object.keys(conversionTable)){

@@ -217,8 +217,7 @@ async function tableButtonClick(input){
 
 
 
-function createFilter(list , obj, objInputArray, filterCount, element, labelString, isInt = false, isOperator = false){
-
+function createFilter(list , obj, objInputArray, filterCount, element, labelString, isInt = false, isOperator = false, text = ""){
 
     const activeTables = document.getElementsByClassName("activeTable")
     if(activeTables.length > 0){
@@ -259,21 +258,26 @@ function createFilter(list , obj, objInputArray, filterCount, element, labelStri
         if(isOperator){
             input.value = ">= "
         }
+        else if(text !== ""){
+            input.value = text
+            updateValue()
+        }
 
-        input.addEventListener("input", e => {
-            let value = e.target.value
+        input.addEventListener("input", updateValue)
+
+        function updateValue(){
+            let value = input.value
             if(!isInt)
                 value = value.replace(/-|'/g, " ").toLowerCase()
 
-            if(list.includes(e.target.value) && e.target.value !== "" && !isOperator){
+            if(list.includes(input.value) && input.value !== "" && !isOperator){
                 input.setAttribute("placeholder", `${value}`)
                 input.blur()
                 filterInput(value, objInputArray, rows, filterCount, obj, isInt, isOperator)
             }
             else if(isOperator)
                 filterInput(value, objInputArray, rows, filterCount, obj, isInt, isOperator)
-
-        })
+        }
 
         button.addEventListener("click", () => {
             for (let i = 0; i < rows.length; i++){
@@ -297,7 +301,6 @@ function filterInput(value, objInputArray, rows, filterCount, obj, isInt = false
     let hideRows = {}
 
     for (let j = 0; j < rows.length; j++){
-
 
         const key = rows[j].querySelector(".key").textContent
 
