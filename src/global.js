@@ -601,7 +601,7 @@ document.addEventListener("keydown", e => {
             e.preventDefault()
             utilityButtonOnClick()
         }    
-        else if(e.code === "Enter"){
+        else if(e.code === "Enter" && panelSpecies !== ""){
             speciesPanelMainContainer.classList.toggle("hide")
             window.scrollTo({ top: 0})
         }
