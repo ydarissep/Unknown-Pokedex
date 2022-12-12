@@ -259,6 +259,20 @@ function createFilter(list , obj, objInputArray, filterCount, element, labelStri
             input.value = ">= "
         }
         else if(text !== ""){
+
+            document.querySelectorAll("[id*=filter]").forEach(el => {
+                el.remove()
+            })
+
+            for (let i = 0; i < rows.length; i++){
+                if(rows[i].classList.contains("hideChanged")){
+                    rows[i].className = "hideChanged hideTemp"
+                }
+                else{
+                    rows[i].className = "hideTemp"
+                }
+            }
+
             input.value = text
             updateValue()
         }

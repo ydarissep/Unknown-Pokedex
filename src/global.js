@@ -596,8 +596,9 @@ utilityButton.onclick = () => {
 }
 document.addEventListener("keydown", e => {
     if(e.target.nodeName !== "INPUT"){
-        e.preventDefault()
+        //e.preventDefault()
         if(e.code === "Space"){
+            e.preventDefault()
             utilityButtonOnClick()
         }    
         else if(e.code === "Enter"){
