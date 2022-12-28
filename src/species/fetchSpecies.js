@@ -107,18 +107,23 @@ async function cleanSpecies(species){
             species[name]["baseSpeed"] = 40
             species[name]["BST"] = calculateBST(name, species)
         }
-        else if(/PIKACHU_/i.test(name)){
-            species[name]["baseHP"] = 45
-            species[name]["baseAttack"] = 80
-            species[name]["baseDefense"] = 50
-            species[name]["baseSpAttack"] = 75
-            species[name]["baseSpDefense"] = 60
-            species[name]["baseSpeed"] = 120
+        else if(/PIKACHU/i.test(name)){
+            if(/PIKACHU_GIGA/i.test(name)){
+                species[name]["baseHP"] = 45                
+            }   
+            else{
+                species[name]["baseHP"] = 45
+                species[name]["baseAttack"] = 80
+                species[name]["baseDefense"] = 50
+                species[name]["baseSpAttack"] = 75
+                species[name]["baseSpDefense"] = 60
+                species[name]["baseSpeed"] = 120
+            }
             species[name]["BST"] = calculateBST(name, species)
         }
         else if(name === "SPECIES_PERSIAN" || name === "SPECIES_PERSIAN_A" || name === "SPECIES_PERRSERKER"
             ||  name === "SPECIES_MEOWTH" || name === "SPECIES_MEOWTH_A" || name === "SPECIES_MEOWTH_G"
-            ||  name === "SPECIES_RAICHU" || name === "SPECIES_RAICHU_A"){
+            ||  name === "SPECIES_RAICHU" || name === "SPECIES_RAICHU_A" || name === "SPECIES_MEOWTH_GIGA"){
             let multiplier = 1
             if(/MEOWTH/i.test(name))
                 multiplier = 1.4
@@ -127,17 +132,20 @@ async function cleanSpecies(species){
             else if(/RAICHU/i.test(name))
                 multiplier = 1.1
 
-            species[name]["baseHP"] = Math.floor(species[name]["baseHP"] * multiplier)
-            species[name]["baseAttack"] = Math.floor(species[name]["baseAttack"] * multiplier)
-            species[name]["baseDefense"] = Math.floor(species[name]["baseDefense"] * multiplier)
-            species[name]["baseSpAttack"] = Math.floor(species[name]["baseSpAttack"] * multiplier)
-            species[name]["baseSpDefense"] = Math.floor(species[name]["baseSpDefense"] * multiplier)
-            species[name]["baseSpeed"] = Math.floor(species[name]["baseSpeed"] * multiplier)
+            if(name === "SPECIES_MEOWTH_GIGA"){
+                species[name]["baseHP"] = Math.floor(40 * multiplier)
+            }
+            else{
+                species[name]["baseHP"] = Math.floor(species[name]["baseHP"] * multiplier)
+                species[name]["baseAttack"] = Math.floor(species[name]["baseAttack"] * multiplier)
+                species[name]["baseDefense"] = Math.floor(species[name]["baseDefense"] * multiplier)
+                species[name]["baseSpAttack"] = Math.floor(species[name]["baseSpAttack"] * multiplier)
+                species[name]["baseSpDefense"] = Math.floor(species[name]["baseSpDefense"] * multiplier)
+                species[name]["baseSpeed"] = Math.floor(species[name]["baseSpeed"] * multiplier)
+            }
             species[name]["BST"] = calculateBST(name, species)
         }
         
-
-
         if(/EVO_GIGANTAMAX/i.test(species[name]["evolution"].toString())){
             for (let i = 0; i < species[name]["evolution"].length; i++){
                 if(species[name]["evolution"][i][0] === "EVO_GIGANTAMAX"){
@@ -195,7 +203,6 @@ async function cleanSpecies(species){
             species[name]["evolution"] = []
         }
     })
-
 
     await Object.keys(species).forEach(name => {
         if(species[name]["baseSpeed"] <= 0 || /_GIGA$/i.test(name)){

@@ -56,7 +56,7 @@ async function regexBaseStats(textBaseStats, species){
 
             const matchSpecies = line.match(/SPECIES_\w+/i)
             if(matchSpecies !== null){
-                if(matchSpecies[0] in species){
+                if(matchSpecies[0] in species || matchSpecies[0] === "SPECIES_EGG"){
                     name = matchSpecies[0]
                     change = false
                 }
