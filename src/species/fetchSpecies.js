@@ -153,28 +153,7 @@ async function cleanSpecies(species){
                 }
             }
         }
-        if(species[name]["baseSpeed"] <= 0 || /_GIGA$/i.test(name)){
-            for (let i = 0; i < species[name]["forms"].length; i++){
-                const targetSpecies = species[name]["forms"][i]
-                for (let j = 0; j < species[targetSpecies]["forms"].length; j++){
-                    if(species[targetSpecies]["forms"][j] === name){
-                        species[targetSpecies]["forms"].splice(j, 1)
-                    }
-                    if(species[targetSpecies]["forms"].length <= 1){
-                        species[targetSpecies]["forms"] = []
-                    }
-                }
-            }
-            for (let i = 0; i < species[name]["evolutionLine"].length; i++){
-                const targetSpecies = species[name]["evolutionLine"][i]
-                for (let j = 0; j < species[targetSpecies]["evolutionLine"].length; j++){
-                    if(species[targetSpecies]["evolutionLine"][j] === name){
-                        species[targetSpecies]["evolutionLine"].splice(j, 1)
-                    }
-                }
-            }
-        }
-        else if(name.match(/_GIGA$/i) !== null && species[name]["evolution"].toString().includes("EVO_MEGA")){
+        if(name.match(/_GIGA$/i) !== null && species[name]["evolution"].toString().includes("EVO_MEGA")){
             const replaceName = name.replace(/_GIGA$/i, "_MEGA")
             species[name]["name"] = replaceName
             species[name]["changes"] = []
@@ -199,13 +178,34 @@ async function cleanSpecies(species){
             species[replaceName] = species[name]
             delete species[name]
         }
+        else if(species[name]["baseSpeed"] <= 0 || /_GIGA$/i.test(name)){
+            for (let i = 0; i < species[name]["forms"].length; i++){
+                const targetSpecies = species[name]["forms"][i]
+                for (let j = 0; j < species[targetSpecies]["forms"].length; j++){
+                    if(species[targetSpecies]["forms"][j] === name){
+                        species[targetSpecies]["forms"].splice(j, 1)
+                    }
+                    if(species[targetSpecies]["forms"].length <= 1){
+                        species[targetSpecies]["forms"] = []
+                    }
+                }
+            }
+            for (let i = 0; i < species[name]["evolutionLine"].length; i++){
+                const targetSpecies = species[name]["evolutionLine"][i]
+                for (let j = 0; j < species[targetSpecies]["evolutionLine"].length; j++){
+                    if(species[targetSpecies]["evolutionLine"][j] === name){
+                        species[targetSpecies]["evolutionLine"].splice(j, 1)
+                    }
+                }
+            }
+        }
         else if(name.match(/_MEGA$|_MEGA_Y$|_MEGA_X$|_GIGA$/i) !== null){
             species[name]["evolution"] = []
         }
     })
 
     await Object.keys(species).forEach(name => {
-        if(species[name]["baseSpeed"] <= 0 || /_GIGA$/i.test(name)){
+        if(species[name]["baseSpeed"] <= 0 /*|| /_GIGA$/i.test(name)*/){
             delete species[name]
         }
     })
