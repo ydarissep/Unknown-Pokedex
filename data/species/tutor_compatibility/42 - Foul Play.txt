@@ -1,4 +1,5 @@
 Tutor 42: Foul Play
+EEVEE
 VULPIX
 VULPIX_A
 NINETALES
