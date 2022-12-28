@@ -1216,7 +1216,7 @@ const struct BattleMove gBattleMoves[] =
 
 	[MOVE_GROWTH] =
 	{
-		.effect = EFFECT_SPECIAL_ATTACK_UP,
+		.effect = EFFECT_ATK_SPATK_UP,
 		.power = 0,
 		.type = TYPE_NORMAL,
 		.accuracy = 0,
@@ -5912,7 +5912,7 @@ const struct BattleMove gBattleMoves[] =
 
 	[MOVE_CHARGEBEAM] =
 	{
-		.effect = EFFECT_SPECIAL_ATTACK_UP_CHANCE,
+		.effect = EFFECT_SPECIAL_ATTACK_UP_HIT,
 		.power = 50,
 		.type = TYPE_ELECTRIC,
 		.accuracy = 90,
@@ -6640,7 +6640,7 @@ const struct BattleMove gBattleMoves[] =
 
 	[MOVE_HONECLAWS] =
 	{
-		.effect = EFFECT_ATTACK_UP,
+		.effect = EFFECT_ATK_ACC_UP,
 		.power = 0,
 		.type = TYPE_DARK,
 		.accuracy = 0,
@@ -6724,7 +6724,7 @@ const struct BattleMove gBattleMoves[] =
 
 	[MOVE_WORKUP] =
 	{
-		.effect = EFFECT_SPECIAL_ATTACK_UP,
+		.effect = EFFECT_ATK_SPATK_UP,
 		.power = 0,
 		.type = TYPE_NORMAL,
 		.accuracy = 0,
@@ -6900,7 +6900,7 @@ const struct BattleMove gBattleMoves[] =
 
 	[MOVE_ACIDSPRAY] =
 	{
-		.effect = EFFECT_SPECIAL_DEFENSE_DOWN_HIT,
+		.effect = EFFECT_SPECIAL_DEFENSE_DOWN_2_HIT,
 		.power = 40,
 		.type = TYPE_POISON,
 		.accuracy = 100,
@@ -6916,7 +6916,7 @@ const struct BattleMove gBattleMoves[] =
 
 	[MOVE_FIERYDANCE] =
 	{
-		.effect = EFFECT_SPECIAL_ATTACK_UP_CHANCE,
+		.effect = EFFECT_SPECIAL_ATTACK_UP_HIT,
 		.power = 80,
 		.type = TYPE_FIRE,
 		.accuracy = 100,
@@ -7772,7 +7772,7 @@ const struct BattleMove gBattleMoves[] =
 
 	[MOVE_ROTOTILLER] =
 	{
-		.effect = EFFECT_SPECIAL_ATTACK_UP,
+		.effect = EFFECT_ATK_SPATK_UP,
 		.power = 0,
 		.type = TYPE_GROUND,
 		.accuracy = 0,
@@ -7972,7 +7972,7 @@ const struct BattleMove gBattleMoves[] =
 
 	[MOVE_PLAYNICE] =
 	{
-		.effect = EFFECT_ATTACK_DOWN,
+		.effect = EFFECT_PLAY_NICE,
 		.power = 0,
 		.type = TYPE_NORMAL,
 		.accuracy = 0,
@@ -9052,7 +9052,7 @@ const struct BattleMove gBattleMoves[] =
 
 	[MOVE_NOBLEROAR] =
 	{
-		.effect = EFFECT_ATTACK_DOWN,
+		.effect = EFFECT_PLAY_NICE,
 		.power = 0,
 		.type = TYPE_NORMAL,
 		.accuracy = 100,
@@ -9340,7 +9340,7 @@ const struct BattleMove gBattleMoves[] =
 
 	[MOVE_SEEDFLARE] =
 	{
-		.effect = EFFECT_SPECIAL_DEFENSE_DOWN_HIT,
+		.effect = EFFECT_SPECIAL_DEFENSE_DOWN_2_HIT,
 		.power = 120,
 		.type = TYPE_GRASS,
 		.accuracy = 85,
@@ -9592,7 +9592,7 @@ const struct BattleMove gBattleMoves[] =
 
 	[MOVE_GEARUP] =
 	{
-		.effect = EFFECT_SPECIAL_ATTACK_UP,
+		.effect = EFFECT_ATK_SPATK_UP,
 		.power = 0,
 		.type = TYPE_STEEL,
 		.accuracy = 0,
@@ -10056,7 +10056,7 @@ const struct BattleMove gBattleMoves[] =
 
 	[MOVE_TEARFULLOOK] =
 	{
-		.effect = EFFECT_ATTACK_DOWN,
+		.effect = EFFECT_PLAY_NICE,
 		.power = 0,
 		.type = TYPE_NORMAL,
 		.accuracy = 0,
@@ -10680,7 +10680,7 @@ const struct BattleMove gBattleMoves[] =
 
 	[MOVE_VENOMDRENCH] =
 	{
-		.effect = EFFECT_ATTACK_DOWN,
+		.effect = EFFECT_VENOM_DRENCH,
 		.power = 0,
 		.type = TYPE_POISON,
 		.accuracy = 100,
@@ -10920,7 +10920,7 @@ const struct BattleMove gBattleMoves[] =
 
 	[MOVE_LASTRESORT] =
 	{
-		.effect = EFFECT_LASTRESORT_SKYDROP,
+		.effect = EFFECT_LAST_RESORT,
 		.power = 140,
 		.type = TYPE_NORMAL,
 		.accuracy = 100,
@@ -10936,7 +10936,7 @@ const struct BattleMove gBattleMoves[] =
 
 	[MOVE_SKYDROP] =
 	{
-		.effect = EFFECT_LASTRESORT_SKYDROP,
+		.effect = EFFECT_SKY_DROP,
 		.power = 60,
 		.type = TYPE_FLYING,
 		.accuracy = 100,
@@ -11224,7 +11224,7 @@ const struct BattleMove gBattleMoves[] =
 
 	[MOVE_DECORATE] =
 	{	//ANIM TODO
-		.effect = EFFECT_DECORATE,
+		.effect = EFFECT_HELPING_HAND,
 		.power = 0,
 		.type = TYPE_FAIRY,
 		.accuracy = 0,
@@ -12960,7 +12960,7 @@ const struct BattleMove gBattleMoves[] =
 	},
 	[MOVE_SPRINGTIDESTORM] =
 	{
-		.effect = EFFECT_ALL_STATS_UP_HIT,
+		.effect = EFFECT_SPRINGTIDE_STORM,
 		.power = 95,
 		.type = TYPE_FAIRY,
 		.accuracy = 80,
@@ -13020,7 +13020,7 @@ const struct BattleMove gBattleMoves[] =
 	},
 	[MOVE_SHELTER] =
 	{
-		.effect = EFFECT_CALM_MIND,
+		.effect = EFFECT_DEF_SPD_UP,
 		.power = 0,
 		.type = TYPE_STEEL,
 		.accuracy = 0,
