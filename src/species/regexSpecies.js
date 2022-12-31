@@ -299,6 +299,24 @@ async function regexTutorLearnsets(textTutorLearnsets, species, start, end){
     const lines = textTutorLearnsets.split("\n")
     let name = null, startFound = false, tutor = 0, count = 0
 
+    const filterUnusedTutor = ["Helping Hand", "Razor Shell", "Hex", "Weather Ball", 
+        "Aura Sphere", "Blaze Kick", "Bug Buzz", "Cross Poison", "Darkest Lariat", 
+        "Block", "High Horsepower", "Leaf Blade", "Muddy Water", "Mystical Fire", 
+        "Phantom Force", "Pollen Puff", "Power Gem", "Psychic Fangs", "Psycho Cut", 
+        "Worry Seed", "Brave Bird", "Flare Blitz", "Hurricane", "Leaf Storm", "Megahorn", 
+        "Power Whip", "Solar Blade", "Covet", "Bug Bite", "Snatch", "Spite", "After You", 
+        "Gravity", "Telekinesis", "Magnet Rise", "Bounce", "Role Play", "Icy Wind", "Seed Bomb", 
+        "Laser Focus", "Drill Run", "Magic Room", "Wonder Room", "Gastro Acid", "Super Fang", 
+        "Sky Attack", "Throat Chop", "Stomping Tantrum", "Heal Bell", "Dual Chop", "Hyper Voice", 
+        "Psych Up", "Vacuum Wave", "Last Resort", "Confide", "Grass Pledge", "Electroweb", "Fire Pledge", 
+        "Water Pledge", "Frenzy Plant", "Blast Burn", "Hydro Cannon", "Focus Energy", "Cosmic Power", 
+        "Baton Pass", "Screech", "Low Kick", "Fake Tears", "Scary Face", "Venom Drench", "Grassy Terrain", 
+        "Misty Terrain", "Uproar", "Electric Terrain", "Psychic Terrain", "Whirlpool", "Fire Spin", 
+        "Sand Tomb", "Pin Missile", "Icicle Spear", "Tail Slap", "Rock Blast", "Thunder Fang", 
+        "Bind", "Ice Fang", "Fire Fang", "Body Press", "Heat Crash", "Heavy Slam", "Reversal", 
+        "Electro Ball", "Stored Power", "Breaking Swipe"]
+
+
     await lines.forEach(line => {
         if(line.includes(start))
             startFound = true
@@ -357,25 +375,27 @@ async function regexTutorLearnsets(textTutorLearnsets, species, start, end){
                 else if(move === "DualWingbeat")
                     move = "Dual Wingbeat"
 
-                const rawTutor = fetch(`https://raw.githubusercontent.com/${repo}/main/data/species/tutor_compatibility/${count} - ${move}.txt`)
-                .then(promises => {
-                    const textTutor = promises.text()
+                if(!filterUnusedTutor.includes(move)){ // filter unused tutors
+                    const rawTutor = fetch(`https://raw.githubusercontent.com/${repo}/main/data/species/tutor_compatibility/${count} - ${move}.txt`)
                     .then(promises => {
-                        const lines = promises.split("\n")
-                            lines.forEach(line => {
+                        const textTutor = promises.text()
+                        .then(promises => {
+                            const lines = promises.split("\n")
+                                lines.forEach(line => {
 
-                            if(line.includes(":")){
-                                const matchTutor = line.match(/\d+/)
-                                if(matchTutor !== null)
-                                    tutor = matchTutor[0]
-                            }
+                                if(line.includes(":")){
+                                    const matchTutor = line.match(/\d+/)
+                                    if(matchTutor !== null)
+                                        tutor = matchTutor[0]
+                                }
 
-                            const matchSpecies = `SPECIES_${line.trim()}`
-                            if(species[matchSpecies] !== undefined)
-                                species[matchSpecies]["tutorLearnsets"].push([matchMove[0], tutor])
+                                const matchSpecies = `SPECIES_${line.trim()}`
+                                if(species[matchSpecies] !== undefined)
+                                    species[matchSpecies]["tutorLearnsets"].push([matchMove[0], tutor])
+                            })
                         })
                     })
-                })
+                }
             }
         }
         
