@@ -25,7 +25,7 @@ async function getManualLocations(locations){
 async function buildLocationsObj(){
     let locations = {}
 
-    locations = await getWildLocations(locations)
+    //locations = await getWildLocations(locations)
     //locations = await getRaidLocations(locations)
     //locations = await getManualLocations(locations)
 

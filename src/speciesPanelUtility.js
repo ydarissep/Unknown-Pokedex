@@ -196,7 +196,6 @@ async function createSpeciesPanel(name){
 
 
 
-
     const eggGroup1 = document.createElement("div")
     const eggGroup2 = document.createElement("div")
     eggGroup1.innerText = sanitizeString(species[name]["eggGroup1"])
