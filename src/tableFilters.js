@@ -351,6 +351,7 @@ function createFilter(value, label){
         }
         newFilter.remove()
         refreshLocationsTables()
+        lazyLoading(true)
     })
 
     hideFilterList()
