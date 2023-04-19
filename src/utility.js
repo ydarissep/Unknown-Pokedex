@@ -1,5 +1,5 @@
 function sanitizeString(string){
-    const regex = /^SPECIES_|^TYPE_|ABILITY_NONE|ABILITY_|^SPECIES_NONE|^MOVE_|^SPLIT_|FLAG_|^EFFECT_|^Z_EFFECT_|^ITEM_|^EGG_GROUP_|^EVO_/ig
+    const regex = /^SPECIES_|^TYPE_|^ABILITY_|^MOVE_|^SPLIT_|FLAG_|^EFFECT_|^Z_EFFECT_|^ITEM_|^EGG_GROUP_|^EVO_/ig
 
     const unsanitizedString = string.toString().replace(regex, "")
     let matchArray = unsanitizedString.match(/\w+/g)
@@ -94,6 +94,26 @@ function setDataList(){
         abilitiesInputDataList.append(option)
     })
 }
+
+
+
+
+
+function getSpeciesSpriteSrc(speciesName){
+    if(sprites[speciesName]){
+        if(sprites[speciesName].length < 500){
+            return species[speciesName]["sprite"]
+        }
+        else{
+            return sprites[speciesName]
+        }
+    }
+    else{
+        return species[speciesName]["sprite"]
+    }
+}
+
+
 
 
 

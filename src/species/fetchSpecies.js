@@ -258,6 +258,7 @@ async function buildSpeciesObj(){
             return a - b
         })
     })
+    
     await localStorage.setItem("species", LZString.compressToUTF16(JSON.stringify(species)))
     return species
 }
