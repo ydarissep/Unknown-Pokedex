@@ -5,11 +5,11 @@ async function regexSpecies(textSpecies, species){
     await lines.forEach(line => {
 
         const matchSpecies = line.match(/#define *(SPECIES_\w+)/i)
-        if(matchSpecies !== null && /SPECIES_NONE/i.test(line) !== true && /SPECIES_EGG/i.test(line) !== true){
+        if(matchSpecies){
             const name = matchSpecies[1]
 
             matchID = line.match(/0[xX][0-9a-fA-F]+/i)
-            if(matchID !== null){
+            if(matchID){
                 ID = parseInt(matchID[0])
 
                 species[name] = {}
@@ -55,7 +55,7 @@ async function regexBaseStats(textBaseStats, species){
 
 
             const matchSpecies = line.match(/SPECIES_\w+/i)
-            if(matchSpecies !== null){
+            if(matchSpecies){
                 if(matchSpecies[0] in species || matchSpecies[0] === "SPECIES_EGG"){
                     name = matchSpecies[0]
                     change = false
@@ -63,35 +63,33 @@ async function regexBaseStats(textBaseStats, species){
             }
 
 
-            if(name !== "SPECIES_NONE" && name !== "SPECIES_EGG"){
-                const matchRegex = line.match(regex)
-                if(matchRegex !== null){
-                    const match = matchRegex[0]
+            const matchRegex = line.match(regex)
+            if(matchRegex){
+                const match = matchRegex[0]
 
 
 
-                    if(match === "baseHP" || match === "baseAttack" || match === "baseDefense" || match === "baseSpeed" || match === "baseSpAttack" || match === "baseSpDefense"){
-                        const matchInt = line.match(/\d+/)
-                        if(matchInt !== null)
-                            value = parseInt(matchInt[0])
+                if(match === "baseHP" || match === "baseAttack" || match === "baseDefense" || match === "baseSpeed" || match === "baseSpAttack" || match === "baseSpDefense"){
+                    const matchInt = line.match(/\d+/)
+                    if(matchInt)
+                        value = parseInt(matchInt[0])
+                }
+                else if(match === "type1" || match === "type2" || match === "item1" || match === "item2" || match === "eggGroup1" || match === "eggGroup2" || match === "ability1" || match === "ability2" || match === "hiddenAbility"){
+                    value = line.match(/\w+_\w+/i)
+                    if(value)
+                        value = value[0]
+                }
+
+
+
+                if(change === true)
+                    species[name]["changes"].push([match, value])
+                else if(change === false){
+                    if(match === "ability1" || match === "ability2" || match === "hiddenAbility"){
+                        species[name]["abilities"].push(value)
                     }
-                    else if(match === "type1" || match === "type2" || match === "item1" || match === "item2" || match === "eggGroup1" || match === "eggGroup2" || match === "ability1" || match === "ability2" || match === "hiddenAbility"){
-                        value = line.match(/\w+_\w+/i)
-                        if(value !== null)
-                            value = value[0]
-                    }
-
-
-
-                    if(change === true)
-                        species[name]["changes"].push([match, value])
-                    else if(change === false){
-                        if(match === "ability1" || match === "ability2" || match === "hiddenAbility"){
-                            species[name]["abilities"].push(value)
-                        }
-                        else{
-                            species[name][match] = value
-                        }
+                    else{
+                        species[name][match] = value
                     }
                 }
             }
@@ -111,7 +109,7 @@ async function regexChanges(textChanges, species){
     await lines.forEach(line => {
 
         const matchSpecies = line.match(/SPECIES_\w+/i)
-        if(matchSpecies !== null){
+        if(matchSpecies){
             if(name in species && abilities.length >= species[name]["abilities"].length && JSON.stringify(abilities) !== JSON.stringify(species[name]["abilities"])){
                 species[name]["changes"].push(["abilities", abilities])
             }
@@ -122,24 +120,24 @@ async function regexChanges(textChanges, species){
 
         if(name in species){
             const matchRegex = line.match(regex)
-            if(matchRegex !== null){
+            if(matchRegex){
                 const match = matchRegex[0]
 
 
 
                 if(match === "baseHP" || match === "baseAttack" || match === "baseDefense" || match === "baseSpeed" || match === "baseSpAttack" || match === "baseSpDefense"){
                     const matchInt = line.match(/\d+/)
-                    if(matchInt !== null)
+                    if(matchInt)
                         value = parseInt(matchInt[0])
                 }
                 else if(match === "type1" || match === "type2"){
                     value = line.match(/\w+_\w+/i)
-                    if(value !== null)
+                    if(value)
                         value = value[0]
                 }
                 else if(match === "ability1" || match === "ability2" || match === "hiddenAbility"){
                     value = line.match(/\w+_\w+/i)
-                    if(value !== null)
+                    if(value)
                         value = value[0]
                     abilities.push(value)
                 }
@@ -165,7 +163,7 @@ async function getLevelUpLearnsetsConversionTable(textLevelUpLearnsetsPointers){
     await lines.forEach(line => {
 
         const matchSpecies = line.match(/SPECIES_\w+/i)
-        if(matchSpecies != null && /SPECIES_NONE/i.test(line) !== true && /SPECIES_ZYGARDE_CORE/i.test(line) !== true && /SPECIES_ZYGARDE_CELL/i.test(line) !== true){
+        if(matchSpecies){
             let value = matchSpecies[0]
 
             if(value === "SPECIES_ENAMORUS_THERIAN")
@@ -173,7 +171,7 @@ async function getLevelUpLearnsetsConversionTable(textLevelUpLearnsetsPointers){
 
 
             const matchConversion = line.match(/s\w+LevelUpLearnset/i)
-            if(matchConversion !== null){
+            if(matchConversion){
                 const index = matchConversion[0]
 
 
@@ -196,14 +194,14 @@ async function regexLevelUpLearnsets(textLevelUpLearnsets, conversionTable, spec
         if(!/^\/\//.test(line.trim())){
 
             const matchConversion = line.match(/s\w+LevelUpLearnset/i)
-            if(matchConversion !== null){
+            if(matchConversion){
                 const index = matchConversion[0]
                 speciesArray = conversionTable[index]
             }
 
 
             const matchLevelMove = line.match(/(\d+) *, *(MOVE_\w+)/i)
-            if(matchLevelMove !== null){
+            if(matchLevelMove){
                 const level = parseInt(matchLevelMove[1])
                 const move = matchLevelMove[2]
                 for(let i = 0; i < speciesArray.length; i++)
@@ -244,7 +242,7 @@ async function regexTMHMLearnsets(textTMHMLearnsets, species, start, end){
 
         if(startFound){
             const matchMove = line.trim().match(/^MOVE_\w+/i)
-            if(matchMove !== null){
+            if(matchMove){
                 let move = moves[matchMove[0]]["ingameName"]
                 count++
 
@@ -270,7 +268,7 @@ async function regexTMHMLearnsets(textTMHMLearnsets, species, start, end){
 
                         lines.forEach(line => {
                             const matchTMHM = line.match(/TM\d+|HM\d+/i)
-                            if(matchTMHM !== null)
+                            if(matchTMHM)
                                 TMHM = matchTMHM[0]
 
 
@@ -326,7 +324,7 @@ async function regexTutorLearnsets(textTutorLearnsets, species, start, end){
 
         if(startFound){
             const matchMove = line.trim().match(/^MOVE_\w+/i)
-            if(matchMove !== null){
+            if(matchMove){
                 let move = moves[matchMove[0]]["ingameName"]
                 count++
 
@@ -385,7 +383,7 @@ async function regexTutorLearnsets(textTutorLearnsets, species, start, end){
 
                                 if(line.includes(":")){
                                     const matchTutor = line.match(/\d+/)
-                                    if(matchTutor !== null)
+                                    if(matchTutor)
                                         tutor = matchTutor[0]
                                 }
 
@@ -421,18 +419,18 @@ async function regexEvolution(textEvolution, species){
     await lines.forEach(line =>{
 
         const matchSpecies = line.match(/\[ *(SPECIES_\w+) *\]/i)
-        if(matchSpecies !== null)
+        if(matchSpecies)
             name = matchSpecies[1]
 
 
 
         const matchEvoInfo = line.match(/(\w+), *(\w+), *(\w+)/)
-        if(matchEvoInfo !== null){
+        if(matchEvoInfo){
             let method = matchEvoInfo[1]
             const condition = matchEvoInfo[2]
             const targetSpecies = matchEvoInfo[3]
             const matchHisuian = line.match(/EVO_HISUIAN/)
-            if(matchHisuian != null){
+            if(matchHisuian){
                 method += "_HISUIAN_POTENTIAL"
             }
             species[name]["evolution"].push([method, condition, targetSpecies])
@@ -492,7 +490,7 @@ async function regexForms(textForms, species){
                 species[speciesArray[i]]["forms"] = speciesArray
             speciesArray = []
         }
-        else if(matchSpecies !== null){
+        else if(matchSpecies){
             const name = matchSpecies[0]
             speciesArray.push(name)
         }
@@ -516,15 +514,15 @@ async function regexEggMovesLearnsets(textEggMoves, species){
         if(/egg_moves/i.test(line))
             name = null
         const matchMove = line.match(/MOVE_\w+/i)
-        if(matchMove !== null){
+        if(matchMove){
             const move = matchMove[0]
-            if(name !== null){
+            if(name){
                 species[name]["eggMovesLearnsets"].push(move)
             }
         }
         else if(name === null){
             const matchLine = line.match(/(\w+),/i)
-            if(matchLine !== null){
+            if(matchLine){
                 const testSpecies = `SPECIES_${speciesString.match(matchLine[1])}`
                 if(speciesString.includes(testSpecies))
                     name = testSpecies
@@ -549,15 +547,15 @@ async function regexReplaceAbilities(textReplaceAbilities, species){
             replaceAbility = ""
         }
         const matchSpecies = line.match(/SPECIES_\w+/i)
-        if(matchSpecies !== null){
+        if(matchSpecies){
             speciesName = matchSpecies[0]
         }
         const matchAbility = line.match(/ABILITY_\w+/i)
-        if(matchAbility !== null){
+        if(matchAbility){
             ability = matchAbility[0]
         }
         const matchReplaceAbility = line.match(/NAME_\w+/i)
-        if(matchReplaceAbility !== null){
+        if(matchReplaceAbility){
             replaceAbility = matchReplaceAbility[0].replace("NAME_", "ABILITY_")
         }
 
@@ -587,11 +585,11 @@ async function regexSprite(textSprite, species){
 
     await lines.forEach(line => {
         const matchSpecies = line.match(/SPECIES_\w+/i)
-        if(matchSpecies !== null && /SPECIES_NONE/i.test(line) !== true && /SPECIES_EGG/i.test(line) !== true){
+        if(matchSpecies){
             let name = matchSpecies[0]
 
             const matchURL = line.match(/gFrontSprite\w+Tiles/i)
-            if(matchURL !== null){
+            if(matchURL){
                 let url = `https://raw.githubusercontent.com/${repo}/main/data/species/frontspr/${matchURL[0].replace("Tiles", ".png")}`
 
                 /*

@@ -3,7 +3,7 @@ function sanitizeString(string){
 
     const unsanitizedString = string.toString().replace(regex, "")
     let matchArray = unsanitizedString.match(/\w+/g)
-    if(matchArray !== null){
+    if(matchArray){
         for (i = 0; i < matchArray.length; i++){
             matchArray[i] = matchArray[i].split('_')
             for (j = 0; j < matchArray[i].length; j++){
@@ -51,7 +51,7 @@ async function fetchTypeChart(){
 
 
 async function forceUpdate(){
-    const update = 6
+    const update = 7
     if(localStorage.getItem("update") != `${update} Unown`){
         await localStorage.clear()
         await localStorage.setItem("update", `${update} Unown`)

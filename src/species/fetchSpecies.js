@@ -153,7 +153,7 @@ async function cleanSpecies(species){
                 }
             }
         }
-        if(name.match(/_GIGA$/i) !== null && species[name]["evolution"].toString().includes("EVO_MEGA")){
+        if(name.match(/_GIGA$/i) && species[name]["evolution"].toString().includes("EVO_MEGA")){
             const replaceName = name.replace(/_GIGA$/i, "_MEGA")
             species[name]["name"] = replaceName
             species[name]["changes"] = []
@@ -199,17 +199,10 @@ async function cleanSpecies(species){
                 }
             }
         }
-        else if(name.match(/_MEGA$|_MEGA_Y$|_MEGA_X$|_GIGA$/i) !== null){
+        else if(name.match(/_MEGA$|_MEGA_Y$|_MEGA_X$|_GIGA$/i)){
             species[name]["evolution"] = []
         }
     })
-
-    await Object.keys(species).forEach(name => {
-        if(species[name]["baseSpeed"] <= 0 /*|| /_GIGA$/i.test(name)*/){
-            delete species[name]
-        }
-    })
-
 
     return species
 }
@@ -233,27 +226,12 @@ async function buildSpeciesObj(){
     species = await getTutorLearnsets(species)
     species = await getSprite(species)
 
-
-
-
-
     species = await altFormsLearnsets(species, "forms", "tutorLearnsets")
     species = await altFormsLearnsets(species, "forms", "TMHMLearnsets")
 
-
     species = await cleanSpecies(species)
 
-
-
     species = await getChanges(species, "https://raw.githubusercontent.com/Skeli789/Dynamic-Pokemon-Expansion/master/src/Base_Stats.c")
-
-
-
-    delete species["SPECIES_ZYGARDE_CORE"]
-    delete species["SPECIES_ZYGARDE_CELL"]
-    delete species["SPECIES_SHADOW_WARRIOR"]
-    delete species["SPECIES_UNKNOWN_MYTHICAL"]
-
 
     Object.keys(species).forEach(name => {
         species[name]["tutorLearnsets"].sort((a,b) => a[1] - b[1])
@@ -280,7 +258,6 @@ async function buildSpeciesObj(){
             return a - b
         })
     })
-
     await localStorage.setItem("species", LZString.compressToUTF16(JSON.stringify(species)))
     return species
 }
@@ -313,8 +290,6 @@ function initializeSpeciesObj(species){
         species[name]["forms"] = []
         species[name]["sprite"] = ""
     }
-    delete species["SPECIES_NONE"]
-    delete species["SPECIES_EGG"]
     return species
 }
 
@@ -326,14 +301,23 @@ async function fetchSpeciesObj(){
         window.species = await JSON.parse(LZString.decompressFromUTF16(localStorage.getItem("species")))
 
 
-    window.spritesObj = {}
-    if(localStorage.getItem("sprites")){
-        spritesObj = JSON.parse(localStorage.getItem("sprites"))
-        Object.keys(spritesObj).forEach(species => {
-            spritesObj[species] = LZString.decompressFromUTF16(spritesObj[species])
-        })
+    window.sprites = {}
+    window.speciesTracker = []
+
+    await Object.keys(species).forEach(async name => {
+        if(!localStorage.getItem(`${name}`)){
+            await spriteRemoveBgReturnBase64(name, species)
+        }
+        if(localStorage.getItem(`${name}`)){
+            sprites[name] = await LZString.decompressFromUTF16(localStorage.getItem(`${name}`))
+        }
+    })
+    for(let i = 0, j = Object.keys(species).length; i < j; i++){
+        speciesTracker[i] = {}
+        speciesTracker[i]["key"] = Object.keys(species)[i]
+        speciesTracker[i]["filter"] = []
     }
 
-    await displaySpecies()
+    tracker = speciesTracker
 }
 
