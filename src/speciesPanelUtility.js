@@ -126,7 +126,9 @@ async function createSpeciesPanel(name){
 
     if(species[name]["evolutionLine"].length > 1){
         for (let i = 0; i < species[name]["evolutionLine"].length; i++){
-            speciesEvolutionsContainer.append(createClickableImgAndName(species[name]["evolutionLine"][i]))
+            if(species[name]["evolutionLine"][i] in species){
+                speciesEvolutionsContainer.append(createClickableImgAndName(species[name]["evolutionLine"][i]))
+            }
         }
     }
 
@@ -138,19 +140,21 @@ async function createSpeciesPanel(name){
     }
     else{
         for (let i = 0; i < species[name]["evolution"].length; i++){
-            const evoMethod = document.createElement("div")
-            const sprite = document.createElement("img")
-            evoMethod.innerText = `${sanitizeString(species[name]["evolution"][i][0])} (${sanitizeString(species[name]["evolution"][i][1])}) ➝ ${sanitizeString(species[name]["evolution"][i][2])}`
-            sprite.src = getSpeciesSpriteSrc(species[name]["evolution"][i][2])
-            sprite.className = `sprite${species[name]["evolution"][i][2]} miniSprite2`
-            evoMethod.className = "evoMethod"
-            evoMethod.append(sprite)
+            if(species[name]["evolution"][i][2] in species){
+                const evoMethod = document.createElement("div")
+                const sprite = document.createElement("img")
+                evoMethod.innerText = `${sanitizeString(species[name]["evolution"][i][0])} (${sanitizeString(species[name]["evolution"][i][1])}) ➝ ${sanitizeString(species[name]["evolution"][i][2])}`
+                sprite.src = getSpeciesSpriteSrc(species[name]["evolution"][i][2])
+                sprite.className = `sprite${species[name]["evolution"][i][2]} miniSprite2`
+                evoMethod.className = "evoMethod"
+                evoMethod.append(sprite)
 
-            evoMethod.addEventListener("click", () => {
-                createSpeciesPanel(species[name]["evolution"][i][2])
-            })
+                evoMethod.addEventListener("click", () => {
+                    createSpeciesPanel(species[name]["evolution"][i][2])
+                })
 
-            speciesEvoMethod.append(evoMethod)
+                speciesEvoMethod.append(evoMethod)
+            }
         }
     }
 
