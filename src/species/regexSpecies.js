@@ -274,7 +274,7 @@ async function regexTMHMLearnsets(textTMHMLearnsets, species, start, end){
 
                             const matchSpecies = `SPECIES_${line.trim()}`
                             if(species[matchSpecies] !== undefined)
-                                species[matchSpecies]["TMHMLearnsets"].push([matchMove[0], TMHM])
+                                species[matchSpecies]["TMHMLearnsets"].push(matchMove[0])
                         })
                     })
                 })
@@ -389,7 +389,7 @@ async function regexTutorLearnsets(textTutorLearnsets, species, start, end){
 
                                 const matchSpecies = `SPECIES_${line.trim()}`
                                 if(species[matchSpecies] !== undefined)
-                                    species[matchSpecies]["tutorLearnsets"].push([matchMove[0], tutor])
+                                    species[matchSpecies]["tutorLearnsets"].push(matchMove[0])
                             })
                         })
                     })
@@ -625,7 +625,7 @@ async function altFormsLearnsets(species, input, output){
             for (let j = 0; j < species[name][input].length; j++){
                 const targetSpecies = species[name][input][j]
 
-                if(species[targetSpecies][output].length < species[name][output].length){
+                if(species[targetSpecies][output].length <= 0){
                     species[targetSpecies][output] = species[name][output]
                 }
             }
@@ -649,4 +649,17 @@ async function getBST(species){
 
     }
     return species
+}
+
+function calculateBST(speciesName, species){
+    let BST = 0
+
+    BST += species[speciesName]["baseHP"]
+    BST += species[speciesName]["baseAttack"]
+    BST += species[speciesName]["baseDefense"]
+    BST += species[speciesName]["baseSpAttack"]
+    BST += species[speciesName]["baseSpDefense"]
+    BST += species[speciesName]["baseSpeed"]
+
+    return BST
 }

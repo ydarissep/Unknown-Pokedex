@@ -308,7 +308,7 @@ function regexVanillaMovesDescription(textVanillaMovesDescription, moves){
             else{
                 const matchDescription = lines[i].match(/_ *\( *" *(.*)" *\) *;/i)
                 if(matchDescription){
-                    const description = [matchDescription[1]]
+                    const description = [matchDescription[1].replace(/\\n/g, " ")]
                     if(conversionTable[conversionDescription] !== undefined){
                         if(moves[conversionTable[conversionDescription][0]] !== undefined){
                             for(let j = 0; j < conversionTable[conversionDescription].length; j++)
