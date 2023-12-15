@@ -56,14 +56,13 @@ function regexMoves(textMoves, moves){
                 }
             }
         }
-        if(line.includes("#ifdef")){
+        if(line.includes("#if"))
             rebalanced = true
-        }
-        else if(line.includes("else") && rebalanced === true){
+        else if(line.includes("#el") && rebalanced === true){
             rebalanced = false
             change = true
         }
-        else if(line.includes("endif") && change === true)
+        else if(line.includes("#endif") && change === true)
             change = false
 
 
