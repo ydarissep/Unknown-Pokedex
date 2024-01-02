@@ -1,5 +1,5 @@
-window.repo = "ydarissep/Unown-Pokedex"
-window.checkUpdate = "8 Unown"
+window.repo = "ydarissep/Unknown-Pokedex"
+window.checkUpdate = "9 Unown"
 
 
 fetch('https://raw.githubusercontent.com/ydarissep/dex-core/main/index.html').then(async response => {
@@ -17,8 +17,8 @@ fetch('https://raw.githubusercontent.com/ydarissep/dex-core/main/index.html').th
     }
     link.href = 'https://unown.foobear.org/unown.ico';
 
-    document.title = "Unown Dex"
-    document.getElementById("footerName").innerText = "Unown\nYdarissep Pokedex"
+    document.title = "Unknown Dex"
+    document.getElementById("footerName").innerText = "Unknown\nYdarissep Pokedex"
 
 
 
