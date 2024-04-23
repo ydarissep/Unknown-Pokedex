@@ -15,7 +15,7 @@ fetch('https://raw.githubusercontent.com/ydarissep/dex-core/main/index.html').th
         link.rel = 'icon';
         document.head.appendChild(link);
     }
-    link.href = 'https://unown.foobear.org/unown.ico';
+    link.href = 'https://unknown.foobear.org/unown.ico';
 
     document.title = "Unknown Dex"
     document.getElementById("footerName").innerText = "Unknown\nYdarissep Pokedex"
