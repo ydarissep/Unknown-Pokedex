@@ -1,5 +1,5 @@
 window.repo = "ydarissep/Unknown-Pokedex"
-window.checkUpdate = "9 Unown"
+window.checkUpdate = "10 Unown"
 
 
 fetch('https://raw.githubusercontent.com/ydarissep/dex-core/main/index.html').then(async response => {
